@@ -119,6 +119,7 @@
 				</configuration>
 				<executions>
 					<execution>
+						<?m2e execute onConfiguration,onIncremental?> 
 						<goals>
 							<goal>compile</goal>
 							<goal>compile-custom</goal>
@@ -129,4 +130,3 @@
 		</plugins>
 	</build>
 </project>
-
