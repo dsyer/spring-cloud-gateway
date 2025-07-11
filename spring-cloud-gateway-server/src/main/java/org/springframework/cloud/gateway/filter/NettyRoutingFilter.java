@@ -36,6 +36,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.cloud.gateway.config.HttpClientProperties;
 import org.springframework.cloud.gateway.filter.headers.HttpHeadersFilter;
 import org.springframework.cloud.gateway.filter.headers.HttpHeadersFilter.Type;
+import org.springframework.cloud.gateway.filter.headers.TrailerHeadersFilter;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.TimeoutException;
 import org.springframework.core.Ordered;
@@ -184,7 +185,7 @@ public class NettyRoutingFilter implements GlobalFilter, Ordered {
 
 				response.getHeaders().addAll(filteredResponseHeaders);
 
-				return Mono.just(res);
+				return TrailerHeadersFilter.filter(headersFilters, exchange).then(Mono.just(res));
 			}));
 
 		Duration responseTimeout = getResponseTimeout(route);
